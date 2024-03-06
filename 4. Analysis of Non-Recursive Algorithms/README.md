@@ -12,9 +12,7 @@ C<sub>op</sub> = Execution time of basic operation
 
 C(n) = Number of times basic operation is executed for input size n
 
-For loop starting from 0 to n-1, C(n) = \[
-\sum\_{i=0}^{n-1}
-\]1 = n-1-1+1 = n-1 = Θ(n)
+For loop starting from 0 to n-1, C(n) = $\sum_{i=0}^{n-1} 1$ = n-1-1+1 = n-1 = Θ(n)
 
 ## Sequence
 
