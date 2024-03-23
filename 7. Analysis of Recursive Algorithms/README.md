@@ -31,9 +31,9 @@ T(n-1) = c + T(n-2)
 replace T(n-1) in T(n)
 
 T(n) = c + [ c + T(n-2) ]
-T(n) = 2c + T(n-2)
-T(n) = 3c + T(n-3)
-T(n) = kc + T(n-k), when k>=1;
+T(n-1) = 2c + T(n-2)
+T(n-2) = 3c + T(n-3)
+T(n-k) = kc + T(n-k), when k>=1;
 ```
 
 we know that T(0) = C;
