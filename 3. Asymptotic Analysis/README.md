@@ -48,6 +48,30 @@ c=4, n0=1
 
 > In polynomial functions, We can get Big O notation by the dominant term of the function.
 
+> The easiest way to prove Big O notation is to make every term of the function to be less than or equal to the dominant term of the function.
+
+For example, if f(n) = 3n<sup>2</sup> + 2n + 1, then we can do
+
+```plaintext
+3n^2 + 2n + 1 ≤ 3n^2 + 2n^2 + n^2
+3n^2 + 2n + 1 ≤ 6n^2
+```
+
+To <strong>disprove</strong> Big O notation, we can do the following:
+
+1. Suppose that f(n) belongs to O(g(n))
+2. Show that f(n) leads to a contradiction.
+
+For example, if f(n) = 2n + 3 is Not O(1), then we can do
+
+```plaintext
+Suppose that f(n) belongs to O(1)
+2n + 3 ≤ c.1
+2n + 3 ≤ c
+```
+
+This is a contradiction because the left-hand side of the equation is not less than or equal to the right-hand side of the equation.
+
 ### Big-Ω Notation
 
 Big-Ω (Big-Omega) notation symbolizes the lower bound of the running time of an algorithm. Thus, it provides the best-case complexity of an algorithm. It determines the fastest time that an algorithm can run.
@@ -55,9 +79,38 @@ Big-Ω (Big-Omega) notation symbolizes the lower bound of the running time of an
 The proof of the Big-Ω notation is given by the following formula:
 
 ```
+
 f(n) ≥ c.g(n) where n ≥ n0
 
 0 < c <= ∞
+
+```
+
+to prove that f(n) = Ω(g(n)), we do the following:
+
+1. Drop the lower order terms (Positive).
+
+For example, if f(n) = 3n<sup>2</sup> + 2n + 1, then we can do
+
+```plaintext
+3n^2 + 2n + 1 ≥ 3n^2
+
+c=3, n0=0
+
+```
+
+another method
+
+1. Drop the constant factor.
+2. Drop all terms except the least power of n (Positive).
+
+For example, if f(n) = 3n<sup>2</sup> + 2n + 1, then we can do
+
+```plaintext
+3n^2 + 2n + 1 ≥ n^2
+
+c=1, n0=0
+
 ```
 
 ### Big-Θ Notation
@@ -67,9 +120,11 @@ Big-Θ (Big-Theta) notation is used to describe the average-case complexity of a
 The proof of the Big-Θ notation is given by the following formula:
 
 ```
+
 c1.g(n) ≤ f(n) ≤ c2.g(n) where n ≥ n0
 
 0 < c1 <= c2 < ∞
+
 ```
 
 The Left-hand side of the equation represents the lower bound, and the right-hand side of the equation represents the upper bound.

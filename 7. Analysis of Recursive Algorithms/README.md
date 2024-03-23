@@ -1,55 +1,156 @@
 # Analysis of Recursive Algorithms
 
+## Introduction
+
+In this section, we will learn how to analyze recursive algorithms. We will learn about the iteration method, the recursion-tree method, and the master method.
+
+## Recurrence Relations
+
+A recurrence relation is an equation that recursively defines a sequence. It is a way to define a function in terms of its value on smaller inputs.
+
+### Example
+
+T(n) = T(n-1) + 1, and T(1) = θ(1).
+
+```
+
+factorial(n) {
+    if n == 0 then return 1;
+    end if
+    return n * factorial(n-1);
+}
+```
+
+T(n) = c + T(n-1)
+
+T(n) = cost of non-recursive work + cost of recursive work
+
+```
+T(n-1) = c + T(n-2)
+
+replace T(n-1) in T(n)
+
+T(n) = c + [ c + T(n-2) ]
+T(n) = 2c + T(n-2)
+T(n) = 3c + T(n-3)
+T(n) = kc + T(n-k), when k>=1;
+```
+
+we know that T(0) = C;
+
+so we choose k such that n-k = 0;
+
+k = n;
+
+```
+T(n) = nC + T(0)
+T(n) = nC + C
+T(n) = (n+1)C
+T(n) = θ(n)
+```
+
+and that's how we get the time complexity of the factorial function using substitution method.
+
 ## Iteration Method
 
 The basic idea is to expand the recurrence and express it as a summation of terms dependent only on n and the initial conditions.
 
+### Steps
+
+1. Expand the recurrence relation.
+2. Observe the pattern.
+3. Guess the form of the solution.
+4. Prove the guess by induction.
+
 ### Example
 
-T(n) = T(n-1) +1 , and T(1) = θ(1).
-
 ```
 
-T(n) = T(n-1) + 1
-     = T(n-2) + 1 + 1
-     = T(n-3) + 1 + 1 + 1
-     = T(n-4) + 1 + 1 + 1 + 1
-     = T(n-k) + k
+factorial(n) {
+    if n == 0 then return 1;
+    end if
+    return n * factorial(n-1);
+}
 ```
 
-when n-k = 1, k = n-1.
+T(n) = c + T(n-1)
 
-T(n) = T(n-1) + 1.
-T(n) = T(n-k) + k.
-T(n) = T(1) + (n-1) = θ(n).
+1. Expand the recurrence relation.
+
+```
+T(n) = c + T(n-1)
+T(n) = c + [ c + T(n-2) ]
+T(n) = 2c + T(n-2)
+T(n) = 3c + T(n-3)
+continue this process until we reach the base case.
+```
+
+2. Observe the pattern.
+
+We can see that each term is increasing by a constant value of c and the recursive term T(n-k) where k is number of iterations.
+
+3. Guess the form of the solution.
+
+T(n) = kc + T(n-k)
+
+4. Prove the guess by induction.
+
+Base case: T(0) = c
+
+```
+n - k = 0
+n = k
+```
+
+Inductive step: Assume T(k) = kc + T(0)
+
+```
+T(k+1) = c + T(k)
+T(k+1) = c + kc + T(0)
+T(k+1) = (k+1)c + T(0)
+T(k+1) = (k+1)c
+T(n) = nc
+T(n) = θ(n)
+```
 
 ## The Recursion-Tree Method
 
 In this method, we draw a recursion tree and see how many branches are there at each level of the tree. We sum the work done at each level of the tree to obtain a time function.
 
+We can use the recursion-tree method to solve recurrences of the form:
+
+T(n) = aT(n/b) + Cn<sup>d</sup>
+
 ```
-        Cn
-    /    |    \
-C(n/3)  c(n/3)  c(n/3)
+a = number of subproblems in the recursion
+b = size of each subproblem
+C = cost of the work done outside the recursive calls
+d = exponent in the running time of the "combine" step
 ```
 
-T(n) = 3<sup>h</sup>\*T(1) + $\sum_{i=0}^{h-1} cn$
+### Example
 
-T(n) = 3<sup>h</sup>\*T(1) + cn\*(h-1-0+1)
+![tree_png](https://github.com/Ahmed-M-Aboutaleb/Algorithms/blob/main/7.%20Analysis%20of%20Recursive%20Algorithms/images/tree.png?raw=true)
 
-T(n) = 3<sup>h</sup>\*T(1) + cn\*h
+Cost at each level:
 
-3<sup>h</sup> = n
+Level 0: Cn
 
-h = log<sub>3</sub>n
+Level i: a<sup>i</sup>C(n/b<sup>i</sup>)
 
-T(n) = 3<sup>log<sub>3</sub>n</sup>\*T(1) + cn\*log<sub>3</sub>n
+Number of leaves = a<sup>log<sub>b</sub>n</sup>
 
-T(n) = n\*T(1) + cn\*log<sub>3</sub>n
+Total cost = Cn<sup>d</sup> + Cn<sup>d</sup>log<sub>b</sub>n
 
-T(n) = θ(n) + θ(nlog<sub>3</sub>n)
+T(n) = a<sup>h</sup>T(1) + $\sum_{i=0}^{h-1} a^i C(n/b^i)$
 
-T(n) = θ(nlog<sub>3</sub>n)
+$n/3^h = 1 -> 3^h = n -> h = log_3 n$
+
+T(n) = 3<sup>log<sub>3</sub>n</sup>T(1) + $\sum_{i=0}^{h-1}cn$
+
+T(n) = nT(1) + cn log<sub>3</sub>n
+
+T(n) = θ(n log n)
 
 ## The Master Method
 
@@ -57,37 +158,110 @@ The master method provides a "cookbook" method for solving recurrences of the fo
 
 T(n) = aT(n/b) + f(n)
 
-= aT(n/b) + n<sup>d</sup>.
+where a >= 1, b > 1, and f(n) is an asymptotically positive function.
 
-b > 1, a ≥ 1
+### Steps
 
-We commonly use the master method to solve divide-and-conquer recurrences.
+1. Extract the values of a, b, and f(n).
 
-a = number of subproblems in the recursion
-b = size of each subproblem
+2. Compare f(n) with n<sup>log<sub>b</sub>a</sup>.
+
+3. Determine the case that applies.
 
 ### Case 1
 
-f(n) <= N<sup>log<sub>b</sup>(a)</sup>
+Running time dominated by the cost at leaves.
 
-If N<sup>log<sub>b</sup>(a)</sup> is greater than n<sup>d</sup>, then the solution is θ(n<sup>log<sub>b</sup>(a)</sup>)
+f(n) = O(n<sup>log<sub>b</sub>a - ε</sup>),
+Where ε > 0
 
-### Case 2
+T(n) = θ(n<sup>log<sub>b</sub>a</sup>)
 
-If N<sup>log<sub>b</sup>(a)</sup> is less than n<sup>d</sup>, then the solution is θ(n<sup>d</sup>).
+If f(n) grows polynomially (by factor $n^ε$) slower than n<sup>log<sub>b</sub>a</sup> -> $\frac{n^{log_ba}} {f(n)}$, then the solution is:
 
-### Case 3
-
-If N<sup>log<sub>b</sup>(a)</sup> is equal to n<sup>d</sup>, then the solution is θ(n<sup>d</sup>log<sub>b</sub>n).
+T(n) = θ(n<sup>log<sub>b</sub>a</sup>)
 
 ### Example
 
-T(n) = 4T(n/2) + n
+T(n) = 9T(n/3) + n
 
-a = 4, b = 2, d = 1
+Step 1: a = 9, b = 3, f(n) = n
 
-n<sup>log<sub>b</sub>a</sup> = n<sup>log<sub>2</sub>4</sup> = n<sup>2</sup>
+Step 2:
 
-n<sup>d</sup> = n<sup>1</sup> = n
+n<sup>log<sub>b</sub>a</sup> = n<sup>log<sub>3</sub>9</sup> = n<sup>2</sup>
 
-n<sup>log<sub>2</sub>4</sup> is greater than n<sup>1</sup>, so the solution is θ(n<sup>2</sup>).
+f(n) = n
+
+Step 3:
+
+n<sup>log<sub>b</sub>a</sup> > f(n) -> case 1
+
+T(n) = θ(n<sup>log<sub>3</sub>9</sup>) = θ(n<sup>2</sup>)
+
+### Case 2
+
+Running time evenly distributed among all levels.
+
+f(n) = θ(n<sup>log<sub>b</sub>a</sup> log<sup>k</sup>n)
+
+T(n) = θ(n<sup>log<sub>b</sub>a</sup> log<sup>k+1</sup>n)
+
+Another way to write this is:
+
+f(n) = θ(n<sup>log<sub>b</sub>a</sup>)
+
+T(n) = θ(n<sup>log<sub>b</sub>a</sup> log n)
+
+### Example
+
+T(n) = 2T(n/2) + θ(n)
+
+Step 1: a = 2, b = 2, f(n) = n
+
+Step 2:
+
+n<sup>log<sub>b</sub>a</sup> = n<sup>log<sub>2</sub>2</sup> = n
+
+f(n) = n
+
+Step 3:
+
+f(n) = θ(n) or n<sup>log<sub>b</sub>a</sup> = f(n) -> case 2
+
+T(n) = θ(n log n)
+
+### Case 3
+
+Running time dominated by cost at root consequently, To solve this type of recurrence, we need only to characterize the dominating term.
+
+f(n) = Ω(n<sup>log<sub>b</sub>a + ε</sup>),
+Where ε > 0
+
+T(n) = θ(f(n))
+
+### Example
+
+T(n) = 3T(n/4) + n log n
+
+Step 1: a = 3, b = 4, f(n) = n log n
+
+Step 2:
+
+n<sup>log<sub>b</sub>a</sup> = n<sup>log<sub>4</sub>3</sup> = n<sup>log<sub>4</sub>4</sup> = n
+
+f(n) = n log n
+
+Step 3:
+
+f(n) = Ω(n) or n<sup>log<sub>b</sub>a</sup> < f(n) -> case 3
+
+T(n) = θ(n log n)
+
+## Summary of the Master Method
+
+1. If f(n) < n<sup>log<sub>b</sub>a</sup>, then T(n) = θ(n<sup>log<sub>b</sub>a</sup>).
+
+2. If f(n) = n<sup>log<sub>b</sub>a</sup>, then T(n) = θ(n<sup>log<sub>b</sub>a</sup> logn).
+
+3. If f(n) > n<sup>log<sub>b</sub>a</sup>, then T(n) = θ(f(n)).

@@ -54,7 +54,23 @@ for(i = 1 to n-1){
 
 -   The insertion sort is stable, i.e., it does not change the relative order of elements with equal keys.
 
+### In-Place
+
+-   It is an in-place sorting algorithm as it requires a constant amount of extra space.
+
+### Adaptivity
+
+-   It is adaptive, i.e., it reduces its time complexity if the input array is partially sorted.
+
 ## Applications
 
 -   Insertion sort is used when the number of elements is small.
 -   It can also be useful when input array is almost sorted, only few elements are misplaced in complete big array.
+
+## Some important points
+
+-   Number of passes: n-1
+-   Number of comparisons: $n^2/2$
+-   Number of swaps: $n^2/2$
+-   Number of inversions: $n(n-1)/2$
+-   Number of average inversions: $n(n-1)/4$

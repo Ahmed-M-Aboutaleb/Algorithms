@@ -78,11 +78,36 @@ merge(arr[], s, mid, e) {
 }
 ```
 
-## Complexity
+### Time Complexity
 
--   Time complexity: O(n log n)
--   Space complexity: O(n)
+-   Best Case: O(n log n)
+-   Average Case: O(n log n)
+-   Worst Case: O(n log n)
+
+### Space Complexity
+
+-   O(n)
 
 ## Stability
 
 Merge sort is a stable sort, meaning that it preserves the relative order of equal elements.
+
+## In-Place
+
+Merge sort is not an in-place sorting algorithm as it requires a temporary array to store the sorted elements.
+
+## Adaptivity
+
+Merge sort is not adaptive as it does not change its behavior based on the input data.
+
+## Applications
+
+-   Merge sort is used when the number of elements is large.
+
+## Some important points
+
+-   Number of passes: log<sub>2</sub>n
+-   Number of comparisons: O(n log n)
+-   Number of swaps: N/A (no swaps are performed)
+-   Number of inversions: O(n log n)
+-   Number of average inversions: N/A (Deterministic algorithm)
