@@ -26,7 +26,7 @@ Quick Sort is a divide-and-conquer algorithm. It works by selecting a 'pivot' el
 
 7. Recursively call the quick sort function on the left and right side of the pivot.
 
-![insertion_sort_gif](https://github.com/Ahmed-M-Aboutaleb/Algorithms/blob/main/10.%Quick%20Sort/images/Quick-sort.gif?raw=true)
+![insertion_sort_gif](https://github.com/Ahmed-M-Aboutaleb/Algorithms/blob/main/10.%20Quick%20Sort/images/Quick-sort.gif?raw=true)
 
 ## Pseudocode
 
