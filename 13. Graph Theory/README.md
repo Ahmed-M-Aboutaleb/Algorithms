@@ -22,21 +22,56 @@ If the edge pair is ordered, the graph is called a directed graph (digraph). If 
 
 -   Simple cycle is a cycle that does not have a repeated edge.
 
+-   Isolated vertex is a vertex that has degree 0.
+
+-   Cut vertex is a vertex that when removed makes the graph disconnected.
+
+-   Connectivity in a graph is the minimum number of vertices/edges that need to be removed to make the graph disconnected.
+
 ## Types of Graphs
 
-1.  **Undirected Graph**: The graph in which all the edges are bi-directional.
+### Directed Graphs
 
-2.  **Directed Graph**: The graph in which all the edges are uni-directional.
+1. DAG (Directed Acyclic Graph): A directed graph that contains no cycles.
 
-3.  **Directed Acyclic Graph (DAG)**: The directed graph that does not have any cycle.
+2. Trees: A connected graph with no cycles.
 
-4.  **Weighted Graph**: The graph in which each edge is assigned a weight or cost.
+### Undirected Graphs
 
-5.  **Tree**: A connected graph with no cycles.
+1. Connected Graph: A graph in which each pair of vertices is connected by a unique path.
 
-6.  **Connected Graph**: A graph in which each vertex is connected to every other vertex.
+2. Complete Graph: A graph in which each pair of vertices is connected by a unique edge.
 
-7.  **Complete Graph**: A graph in which each vertex is connected to every other vertex.
+3. Biconnected Graph: A connected graph that remains connected even after any vertex is removed.
+
+## Complete Graph
+
+A complete graph is a graph in which each pair of graph vertices is connected by an edge. A complete digraph is a directed graph in which each pair of distinct vertices is connected by a pair of unique edges (one in each direction).
+
+### Properties
+
+-   A complete graph with n vertices contains n(n-1)/2 edges.
+
+## Bipartite Graph
+
+A bipartite graph is a graph whose vertices can be divided into two independent sets, U and V, such that every edge connects a vertex in U to one in V.
+
+### Properties
+
+-   A bipartite graph does not contain any odd-length cycles.
+-   The maximum number of edges of a bipartite graph having n vertices is $$n^2/4$$.
+
+## Regular Graph
+
+A regular graph is a graph in which each vertex has the same number of neighbors.
+
+### Properties
+
+-   A regular graph of degree k is a graph in which each vertex has degree k.
+
+## Simple Graph
+
+A simple graph is an undirected graph that does not contain loops or multiple edges.
 
 ## Graph Representation
 
@@ -176,3 +211,16 @@ DFS (G, u)
            if v.visited == false
                DFS(G, v)
 ```
+
+### Complexity Analysis
+
+For a graph G = (V, E), where V is the number of vertices and E is the number of edges:
+
+Time complexity: O(V+E)
+Space complexity: O(V)
+
+### Applications
+
+-   Topological sorting.
+-   Finding connected components.
+-   Solving puzzles with only one solution, such as mazes.

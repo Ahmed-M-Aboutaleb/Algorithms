@@ -117,17 +117,6 @@ T(n) = θ(n)
 
 In this method, we draw a recursion tree and see how many branches are there at each level of the tree. We sum the work done at each level of the tree to obtain a time function.
 
-We can use the recursion-tree method to solve recurrences of the form:
-
-T(n) = aT(n/b) + Cn<sup>d</sup>
-
-```
-a = number of subproblems in the recursion
-b = size of each subproblem
-C = cost of the work done outside the recursive calls
-d = exponent in the running time of the "combine" step
-```
-
 ### Example
 
 ![tree_png](https://github.com/Ahmed-M-Aboutaleb/Algorithms/blob/main/7.%20Analysis%20of%20Recursive%20Algorithms/images/tree.png?raw=true)
@@ -154,114 +143,136 @@ T(n) = θ(n log n)
 
 ## The Master Method
 
-The master method provides a "cookbook" method for solving recurrences of the form:
+### Master Theorem on Decreasing Functions
 
-T(n) = aT(n/b) + f(n)
+```
+T(n) = aT(n-b) + f(n)
 
-where a >= 1, b > 1, and f(n) is an asymptotically positive function.
+where a is the number of recursive calls, b is the factor by which the input size is reduced, and f(n) is the cost of the non-recursive work.
 
-### Steps
-
-1. Extract the values of a, b, and f(n).
-
-2. Compare f(n) with n<sup>log<sub>b</sub>a</sup>.
-
-3. Determine the case that applies.
+```
 
 ### Case 1
 
-Running time dominated by the cost at leaves.
-
-f(n) = O(n<sup>log<sub>b</sub>a - ε</sup>),
-Where ε > 0
-
-T(n) = θ(n<sup>log<sub>b</sub>a</sup>)
-
-If f(n) grows polynomially (by factor $n^ε$) slower than n<sup>log<sub>b</sub>a</sup> -> $\frac{n^{log_ba}} {f(n)}$, then the solution is:
-
-T(n) = θ(n<sup>log<sub>b</sub>a</sup>)
-
-### Example
-
-T(n) = 9T(n/3) + n
-
-Step 1: a = 9, b = 3, f(n) = n
-
-Step 2:
-
-n<sup>log<sub>b</sub>a</sup> = n<sup>log<sub>3</sub>9</sup> = n<sup>2</sup>
-
-f(n) = n
-
-Step 3:
-
-n<sup>log<sub>b</sub>a</sup> > f(n) -> case 1
-
-T(n) = θ(n<sup>log<sub>3</sub>9</sup>) = θ(n<sup>2</sup>)
+If a < 1 -> T(n) = θ(f(n))
 
 ### Case 2
 
-Running time evenly distributed among all levels.
+If a = 1 -> T(n) = θ(nf(n))
 
-f(n) = θ(n<sup>log<sub>b</sub>a</sup> log<sup>k</sup>n)
+Example:
 
-T(n) = θ(n<sup>log<sub>b</sub>a</sup> log<sup>k+1</sup>n)
+T(n) = T(n-1) + 1 = θ(n)
 
-Another way to write this is:
+T(n) = T(n-1) + n = θ(n<sup>2</sup>)
 
-f(n) = θ(n<sup>log<sub>b</sub>a</sup>)
+T(n) = T(n-1) + log n = θ(n log n)
 
-T(n) = θ(n<sup>log<sub>b</sub>a</sup> log n)
-
-### Example
-
-T(n) = 2T(n/2) + θ(n)
-
-Step 1: a = 2, b = 2, f(n) = n
-
-Step 2:
-
-n<sup>log<sub>b</sub>a</sup> = n<sup>log<sub>2</sub>2</sup> = n
-
-f(n) = n
-
-Step 3:
-
-f(n) = θ(n) or n<sup>log<sub>b</sub>a</sup> = f(n) -> case 2
-
-T(n) = θ(n log n)
+We can observe that if a = 1
+then T(n) = θ(n \* f(n))
 
 ### Case 3
 
-Running time dominated by cost at root consequently, To solve this type of recurrence, we need only to characterize the dominating term.
+If a > 1 -> T(n) = θ(a<sup>n/b</sup> \* f(n))
 
-f(n) = Ω(n<sup>log<sub>b</sub>a + ε</sup>),
-Where ε > 0
+T(n) = 2T(n-1) + 1 = θ(2<sup>n</sup>)
 
-T(n) = θ(f(n))
+T(n) = 3T(n-1) + 1 = θ(3<sup>n</sup>)
 
-### Example
+T(n) = 2T(n-1) + n = θ(n2<sup>n</sup>)
 
-T(n) = 3T(n/4) + n log n
+### Summary
 
-Step 1: a = 3, b = 4, f(n) = n log n
+1. If a < b<sup>d</sup> -> T(n) = θ(n<sup>d</sup>)
+2. If a = b<sup>d</sup> -> T(n) = θ(n<sup>d</sup> log n)
+3. If a > b<sup>d</sup> -> T(n) = θ(n<sup>log<sub>b</sub>a</sup>)
 
-Step 2:
+### Master Theorem on Dividing Functions
 
-n<sup>log<sub>b</sub>a</sup> = n<sup>log<sub>4</sub>3</sup> = n<sup>log<sub>4</sub>4</sup> = n
+```
+T(n) = aT(n/b) + f(n)
+```
 
-f(n) = n log n
+### Case 1
 
-Step 3:
+If log<sub>b</sub>a < k -> T(n) = θ(n<sup>k</sup>)
 
-f(n) = Ω(n) or n<sup>log<sub>b</sub>a</sup> < f(n) -> case 3
+if f(n) = O(n<sup>k</sup>) where k >= 0 -> T(n) = θ(n<sup>k</sup>)
 
-T(n) = θ(n log n)
+if f(n) = O(n<sup>k</sup> log<sup>p</sup> n) where k >= 0 and p >= 0 -> T(n) = θ(n<sup>k</sup> log<sup>p</sup> n) else T(n) = θ(n<sup>k</sup>)
 
-## Summary of the Master Method
+### Case 2
 
-1. If f(n) < n<sup>log<sub>b</sub>a</sup>, then T(n) = θ(n<sup>log<sub>b</sub>a</sup>).
+If log<sub>b</sub>a = k -> T(n) = θ(n<sup>k</sup> log n)
 
-2. If f(n) = n<sup>log<sub>b</sub>a</sup>, then T(n) = θ(n<sup>log<sub>b</sub>a</sup> logn).
+If f(n) = O(n<sup>k</sup> log<sup>p</sup> n) where
 
-3. If f(n) > n<sup>log<sub>b</sub>a</sup>, then T(n) = θ(f(n)).
+p > -1 -> T(n) = θ(n<sup>k</sup> log<sup>p+1</sup> n)
+
+p = -1 -> T(n) = θ(n<sup>k</sup> log log n)
+
+p < -1 -> T(n) = θ(n<sup>k</sup>)
+
+### Case 3
+
+If log<sub>b</sub>a > k -> T(n) = θ(n<sup>log<sub>b</sub>a</sup>)
+
+### Summary
+
+1. If log<sub>b</sub>a < k -> T(n) = θ(n<sup>k</sup>)
+2. If log<sub>b</sub>a = k -> T(n) = θ(n<sup>k</sup> log n)
+3. If log<sub>b</sub>a > k -> T(n) = θ(n<sup>log<sub>b</sub>a</sup>)
+
+### Examples
+
+1. T(n) = 2T(n/2) + 1
+
+a = 2, b = 2, f(n) = O(1)
+
+log<sub>2</sub>2 = 1
+
+f(n) = θ(1) = θ(n<sup>0</sup>)
+k = 0
+
+log<sub>2</sub>2 = 1 > 0 // Case 1
+
+T(n) = θ(n<sup>log<sub>b</sub>a</sup>) = θ(n)
+
+2. T(n) = 4T(n/2) + n
+
+a = 4, b = 2, f(n) = O(n)
+
+log<sub>2</sub>4 = 2
+
+f(n) = θ(n) = θ(n<sup>1</sup>)
+k = 1
+
+log<sub>2</sub>4 = 2 > 1 // Case 1
+
+T(n) = θ(n<sup>log<sub>b</sub>a</sup>) = θ(n<sup>2</sup>)
+
+3. T(n) = 2T(n/2) + n
+
+a = 2, b = 2, f(n) = O(n)
+
+log<sub>2</sub>2 = 1
+
+f(n) = θ(n) = θ(n<sup>1</sup>)
+k = 1
+
+log<sub>2</sub>2 = 1 = 1 // Case 2
+
+T(n) = θ(n<sup>k</sup> log n) = θ(n log n)
+
+4. T(n) = 2T(n/2) + n<sup>2</sup>
+
+a = 2, b = 2, f(n) = O(n<sup>2</sup>)
+
+log<sub>2</sub>2 = 1
+
+f(n) = θ(n<sup>2</sup>)
+k = 2
+
+log<sub>2</sub>2 = 1 < 2 // Case 3
+
+T(n) = θ(n<sup>k</sup>) = θ(n<sup>2</sup>)
