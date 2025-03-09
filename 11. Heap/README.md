@@ -2,7 +2,15 @@
 
 ## What is a Heap?
 
-A heap/priority queue is a complete binary tree that satisfies the heap property. The heap property states that for every node `i` in the heap, the value of `i` is greater than or equal to the value of its parent, with the minimum value at the root.
+The heap data structure is an array object that we can view as a nearly complete binary tree. Each node of the tree corresponds to an element of the array.
+
+The tree is completely filled on all levels except possibly the lowest, which is filled from the left up to a point.
+
+An array `A` that represents a heap is an object with two attributes: `length`, which gives the number of elements in the array, and `heap-size`, which represents how many elements in the heap are stored within array `A`.
+
+Although `A[1..A.length]` may contain numbers, only the elements in `A[1..A.heap-size]`, where `0 <= A.heap-size <= A.length`, are valid elements of the heap.
+
+The root of the tree is `A[1]`, and given the index `i` of a node, we can easily compute the indices of its parent, left child, and right child.
 
 ## Types of Heaps
 
@@ -25,17 +33,23 @@ For example, the following is a max heap:
     7  6 5   4
 ```
 
-We can represent a heap using an array. The root node is at index 1, and for any node `i`, the left child is at index `2*i`, and the right child is at index `2*i + 1`.
-
-For example, the above heap can be represented as:
-
-```
+```plaintext
+Array Representation:
+  0    1   2  3  4  5  6  7
 [null, 10, 9, 8, 7, 6, 5, 4]
 ```
 
-> **Note**: We can get the parent of a node `i` by dividing `i` by 2 and taking the floor of the result.
+### Properties of a Heap
 
-## Push Operation
+$Parent(i) = \lfloor i / 2 \rfloor$
+
+$Left(i) = 2i$
+
+$Right(i) = 2i + 1$
+
+## Operations on a Heap
+
+### Push Operation
 
 The push operation is used to insert an element into the heap. The element is inserted at the end of the heap and then moved up to its correct position to maintain the heap property.
 
@@ -59,7 +73,7 @@ push(heap[], value) {
 }
 ```
 
-## Pop Operation
+### Pop Operation
 
 The pop operation is used to remove the root element from the heap. The last element of the heap is moved to the root, and then the element is moved down to its correct position to maintain the heap property.
 
@@ -104,7 +118,7 @@ The space complexity of the heap is O(n), where n is the number of elements in t
 
 Heaps are used in various algorithms and data structures, such as:
 
--   Priority Queues
--   Heap Sort
--   Dijkstra's Algorithm
--   Prim's Algorithm
+- Priority Queues
+- Heap Sort
+- Dijkstra's Algorithm
+- Prim's Algorithm
